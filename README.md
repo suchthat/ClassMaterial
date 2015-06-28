@@ -1,3 +1,3 @@
 # ClassMaterial
 
-I will post here the R Programm used in my lectures.
+I will post here the R Programs used in my lectures.
