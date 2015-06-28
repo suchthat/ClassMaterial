@@ -1,0 +1,65 @@
+### Computation of the Fourier coefficients of the 4-periodic piecewise defined function 
+##f(t)=1 for t in [-2,0)
+## f(t)=1 for t in [0,2)
+## and graph the partial sums.
+
+## Define the function:
+f <- function(t)
+{ f<-0
+  r<- t-4*round(t/4)   ## r in [-2,2] such that x=r+4k (k integer)
+  if (r<0 && r>=-2){f<-1}
+  if(r>=0 && r<=2){f<-r}
+  f
+}
+### compute the a_n coefficients of the Fourier series
+acoef <-function(n)
+{
+  CosIntegrand <-function(t)
+  {f(t)*cos(n*pi*t/2)}
+  b<-integrate(CosIntegrand, lower = 0,upper=2)
+  c<-integrate(CosIntegrand,lower = -2,upper=0)
+  b<-(b$value+c$value)/2
+  b}
+### compute the b_n coefficients of the Fourier series
+bcoef  <-function(n)
+{
+  SinIntegrand <-function(t)
+  {f(t)*sin(n*pi*t/2)}
+  b<-integrate(SinIntegrand, lower = 0,upper=2)
+  c<-integrate(SinIntegrand,lower = -2,upper=0)
+  b<-(b$value+c$value)/2
+  b}
+### Evaluate the values of the partial sum at t
+fourier <-function(t)
+{
+  a<-sapply(seq(1,nterms),acoef) ## Evaluate the coefficients a_n
+  b<-sapply(seq(1,nterms),bcoef) ## Evaluate the coefficients b_n
+  Tn<-seq(1,nterms)*pi/2*t       ## Calculate the value of n*pi*t/L for each value of n
+  Costerm <-sapply(Tn,cos)       ## Evaluate the vector cos(n*pi*t/L) for each value of n
+  Sinterm <-sapply(Tn,sin)       ## Evaluate the vector sin(n*pi*t.L) for each value of n
+  S<-acoef(0)/2+sum(a*Costerm)+sum(b*Sinterm) ## Find the partial sum of the fourier series
+  S
+}
+
+
+### Coordinates of the graph of the function and Fourier approximation
+xvalue <-seq(-3,3,0.03)         ## graph on the interval [-3,3] with step 0.03
+fy<-sapply(xvalue,f)            ## values of f
+## Fourier approximation with 5 terms
+nterms<-5
+fouriery1<-sapply(xvalue,fourier)
+## Fourier approximation with 10 terms
+nterms <-10
+fouriery2<-sapply(xvalue,fourier)
+## Fourier approximation with 50 terms
+nterms <-50
+fouriery3<-sapply(xvalue,fourier)
+
+### Graph the function and the approximations
+plot(xvalue,fy,type="l",col="green", xlab="x", ylab="y", main="Graph of f and some Fourier approximations")
+lines(xvalue,fouriery1,col="red")
+lines(xvalue,fouriery2,col="purple")
+lines(xvalue,fouriery3,col="blue")
+legend(x = "bottomright",  lty = 4, col = c("green","red","purple","blue"), c("graph(f)", "Fourier approx. 5 terms","Fourier approx. 10 terms","Fourier approx. 50 terms"))
+
+
