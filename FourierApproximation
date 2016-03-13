@@ -1,7 +1,7 @@
 ### Computation of the Fourier coefficients of the 4-periodic piecewise defined function 
 ##f(t)=1 for t in [-2,0)
 ## f(t)=1 for t in [0,2)
-## and graph the partial sums.
+## and graph the partial sums
 
 ## Define the function:
 f <- function(t)
@@ -11,7 +11,7 @@ f <- function(t)
   if(r>=0 && r<=2){f<-r}
   f
 }
-### compute the a_n coefficients of the Fourier series
+### compute the a_n coefficients of the Fourier series by integrating between [-2,0], and [0,2]
 acoef <-function(n)
 {
   CosIntegrand <-function(t)
@@ -32,9 +32,9 @@ bcoef  <-function(n)
 ### Evaluate the values of the partial sum at t
 fourier <-function(t)
 {
-  a<-sapply(seq(1,nterms),acoef) ## Evaluate the coefficients a_n
-  b<-sapply(seq(1,nterms),bcoef) ## Evaluate the coefficients b_n
-  Tn<-seq(1,nterms)*pi/2*t       ## Calculate the value of n*pi*t/L for each value of n
+  a<-sapply(seq(1,nterms),acoef) ## Evaluate the list of "nterms" coefficients a_n
+  b<-sapply(seq(1,nterms),bcoef) ## Evaluate the list of "nterms" coefficients b_n
+  Tn<-seq(1,nterms)*pi/2*t       ## Calculate the value of the angles n*pi*t/L for each value of n
   Costerm <-sapply(Tn,cos)       ## Evaluate the vector cos(n*pi*t/L) for each value of n
   Sinterm <-sapply(Tn,sin)       ## Evaluate the vector sin(n*pi*t.L) for each value of n
   S<-acoef(0)/2+sum(a*Costerm)+sum(b*Sinterm) ## Find the partial sum of the fourier series
