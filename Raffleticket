@@ -1,2 +1,6 @@
 ### Given a data frame of 2 columns, Name and number of raffle tickets earned,
 ## Find the name of the winner.
+
+Winner <- function(database)
+{row <- nrow(database)
+}
